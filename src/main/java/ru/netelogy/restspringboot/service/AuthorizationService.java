@@ -6,10 +6,17 @@ import ru.netelogy.restspringboot.InvalidCredentials;
 import ru.netelogy.restspringboot.UnauthorizedUser;
 import ru.netelogy.restspringboot.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.List;
 @Service
 public class AuthorizationService {
+    @Autowired
     UserRepository userRepository;
+
+    public void initializeUsers() {
+        List<Authorities> denisAuthorities = Arrays.asList(Authorities.READ, Authorities.WRITE);
+        userRepository.addUser("Denis", "1111", denisAuthorities);
+    }
 
     public List<Authorities> getAuthorities(String user, String password) {
         if (isEmpty(user) || isEmpty(password)) {
